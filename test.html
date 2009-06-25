@@ -1,0 +1,32 @@
+<html>
+  <head>
+    <title>ComicML Proto Test</title>
+    <script type="text/javascript" src="jquery.js"></script>
+    <script type="text/javascript" src="cmlproto.js"></script>
+    <script type="text/javascript">
+      $(function() {
+      var cml = ComicMLProto();
+      cml.render('.comicml');
+      });
+    </script>
+  </head>
+  <body>
+    <pre class="comicml">
+      version proto
+
+      character paul
+        image paul.png
+      end
+
+      character angie
+        image angie.png
+      end
+
+      angie says I thought you were going to bed!
+      paul say But I really wanted to try and write a comic markup language prototype.
+      angie says What? What the heck is wrong with you? Go to sleep.
+      paul says Just give me a half hour.
+      angie says Ok, fine, but only a half hour. Crazy person.
+    </pre>
+  </body>
+</html>
