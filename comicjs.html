@@ -1,0 +1,44 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD XHTML 1.0 Transitional//EN" "http://www.w3.org/TR/xhtml1/DTD/xhtml1-transitional.dtd">
+<html xmlns="http://www.w3.org/1999/xhtml" xml:lang="en-us" lang="en-us">
+  <head>
+    <title>Canvas Comic!</title>
+  </head>
+  <body>
+    <canvas id="comic" width="1300" height="400">
+      What what? You need a browser that doesn't suck to view this!
+    </canvas>
+    <script type="text/javascript" src="comic.js"></script>
+    <script type="text/javascript" id="comic-script">      window.onload = function() {
+        var c = new Comic(document.getElementById('comic'));
+        c.copyright = "© April 7, 2010 Company-Y.com"
+        var angie = new Character(100, 200);
+        angie.gender = 'female';
+        c.addObject(angie);
+
+        var paul = new Character(700, 200);
+        c.addObject(paul);
+
+        angie.addDialog("Hey Paul, can you do the comic for me tonight?", 50, -75);
+        paul.addDialog("Sure, I've actually already got a comic idea in mind.", -400, -50);
+        angie.addDialog("Awesome! What's it going to be about?", 85, -25);
+        paul.addDialog("It will be about me writing a procedural comic language.", -450, 0);
+        angie.addDialog("What?! No!", 100, 25);
+        paul.addDialog("Seriously, it will be totally awesome! It'll be all like...", -450, 50);
+        paul.addDialog(document.getElementById('comic-script').innerHTML, 80, -95);
+        angie.addDialog("...", 100, 125);
+        angie.addDialog("What the heck is stick-me wearing?!", 110, 190);
+        paul.addDialog("Umm, an isosceles trapezoid? It's supposed to be a dress.", -450, 210);
+        angie.addDialog("Thanks for reminding me why I usually draw the comics.", 110, 230);
+
+        c.canvas_width = 800;
+        c.render();
+
+        for (var i=0; i<3; i++) {
+          c.ctx.translate(285, 175);
+          c.ctx.scale(.25, .25);
+          c.render();
+        }
+      };
+    </script>
+  </body>
+</html>

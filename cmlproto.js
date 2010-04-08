@@ -13,37 +13,48 @@ function rtrim(str, chars) {
 	return str.replace(new RegExp("[" + chars + "]+$", "g"), "");
 }
 
-var ComicMLProto = function() {
+function ComicLProto(sourceElem) {
+    var source = $(sourceElem).text();
+    var lines = source.split("\n");
+
+    var current_line = 0;
+
     var self = {
-        characters: [],
+        characters: {},
 
-        render: function(sourceElem) {
-            var source = $(sourceElem).text();
-            self.output = $('<div></div>');
-            $(sourceElem).after(self.output);
-            var lines = source.split("\n");
-            $.each(lines, function(i) {
-                       var parts = trim(this).split(' ');
-                       if (!parts.length || parts[0] == '') return;
-                       var command = parts[0];
+        render: function() {
+            var output = [];
+            while(current_line < lines.length) {
+                var parts = trim(lines[current_line]).split(' ');
+                current_line++;
 
-                       if (command == 'end') return;
+                if (!parts.length || parts[0] == '') continue;
+                var command = parts[0];
 
-                       if (self.commands[command]) {
-                           self.commands[command](parts.slice(1));
-                       }
-                       else {
-                           self.output.append(['<div>Unrecognized command at line ', i+1,
-                                               ': "', command, '"</div>'].join(''));
-                           console.log(parts);
-                           return false;
-                       }
-                   });
+                // stop rendering when we hit "end"
+                if (command == 'end') break;
+
+                if (self.commands[command]) {
+                    output.push(self.commands[command](parts.slice(1)));
+                }
+                else {
+                    output.push(['<div>Unrecognized command at line ', current_line+1,
+                    ': "', command, '"</div>'].join(''));
+                    console.log(parts);
+                    break;
+                }
+            }
+            return output.join('');
         },
 
         commands: {
             version: function(options) {
                 if (!options.length || options[0] != 'proto') return false;
+                return '';
+            },
+
+            character: function(options) {
+                self.characters[options[0]] = self.render();
                 return '';
             }
         }
